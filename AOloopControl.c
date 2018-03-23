@@ -13,7 +13,7 @@
  *  
  * @defgroup AOloopControl_streams Image streams
  * @defgroup AOloopControl_AOLOOPCONTROL_CONF AOloopControl main data structure
- * 
+ * This is an OS X compatible version 
  */
 
 
