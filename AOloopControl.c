@@ -13,7 +13,7 @@
  *  
  * @defgroup AOloopControl_streams Image streams
  * @defgroup AOloopControl_AOLOOPCONTROL_CONF AOloopControl main data structure
- * This is an OS X compatible version 
+ * This is an OS X Sierra compatible version  - TC, 03/23/2018
  */
 
 
@@ -42,7 +42,7 @@
 
 #include <gsl/gsl_math.h>
 
-#ifdef __MACH__   // for Mac OS X - 
+/*#ifdef __MACH__   // for Mac OS X - 
 //#include <mach/mach_time.h>
 //#define CLOCK_REALTIME 0
 //#define CLOCK_MONOTONIC 0
@@ -57,9 +57,9 @@ int clock_gettime(int clk_id, struct mach_timespec *t) {
     t->tv_nsec = nseconds;
     return 0;
 }
-#else
+#else*/
 #include <time.h>
-#endif
+//#endif
 
 
 //libraries created by O. Guyon 
