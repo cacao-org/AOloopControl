@@ -240,7 +240,7 @@ fi
 
 
 
-xterm -geometry ${wXsize}x${wYsize} -e "tmux a -t $SESSION" &
+xterm -fg white -bg black -geometry ${wXsize}x${wYsize} -e "tmux a -t $SESSION" &
 
 
 
