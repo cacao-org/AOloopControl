@@ -334,6 +334,47 @@ menuitems+=( "laolDMmodeMULTFOFF" "$stoplogstring" )
 fi
 
 
+menuitems+=( " " " " )
+
+
+streamname="apdmatrix"
+infostring="AO188 apdmatrix"
+logwritestartstopstrings
+if [ "${logstat}" = "0" ]; then
+menuitems+=( "lAO188apdON" "$startlogstring" )
+else
+menuitems+=( "lAO188apdOFF" "$stoplogstring" )
+fi
+
+streamname="curv_ord"
+infostring="AO188 curv_ord"
+logwritestartstopstrings
+if [ "${logstat}" = "0" ]; then
+menuitems+=( "lAO188curvON" "$startlogstring" )
+else
+menuitems+=( "lAO188curvOFF" "$stoplogstring" )
+fi
+
+streamname="dmvoltf"
+infostring="AO188 dmvoltf"
+logwritestartstopstrings
+if [ "${logstat}" = "0" ]; then
+menuitems+=( "lAO188dmvfON" "$startlogstring" )
+else
+menuitems+=( "lAO188dmvfOFF" "$stoplogstring" )
+fi
+
+streamname="dmapply"
+infostring="AO188 dmapply"
+logwritestartstopstrings
+if [ "${logstat}" = "0" ]; then
+menuitems+=( "lAO188dmappON" "$startlogstring" )
+else
+menuitems+=( "lAO188dmappOFF" "$stoplogstring" )
+fi
+
+
+
 
 menuitems+=( " " " " )
 
@@ -1038,6 +1079,72 @@ skstreamlog "$streamname"
 echo "0" > "./status/stat_log_${streamname}.txt"
 menurecord_default="laolDMmodeMULTFON"
 ;;
+
+
+
+
+	lAO188apdON)
+streamname="apdmatrix"
+startstreamlog "$streamname" $LogCubeSize
+echo "1" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188apdOFF"
+;;
+
+	lAO188apdOFF)
+streamname="apdmatrix"
+skstreamlog "$streamname" $LogCubeSize
+echo "0" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188apdON"
+;;
+
+
+	lAO188curvON)
+streamname="curv_ord"
+startstreamlog "$streamname" $LogCubeSize
+echo "1" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188curvOFF"
+;;
+
+	lAO188curvOFF)
+streamname="curv_ord"
+skstreamlog "$streamname" $LogCubeSize
+echo "0" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188curvON"
+;;
+
+
+
+	lAO188dmvfON)
+streamname="dmvoltf"
+startstreamlog "$streamname" $LogCubeSize
+echo "1" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188dmvfOFF"
+;;
+
+	lAO188dmvfOFF)
+streamname="dmvoltf"
+skstreamlog "$streamname" $LogCubeSize
+echo "0" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188dmvfON"
+;;
+
+
+	lAO188dmappON)
+streamname="dmapply"
+startstreamlog "$streamname" $LogCubeSize
+echo "1" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188dmappOFF"
+;;
+
+	lAO188dmappOFF)
+streamname="dmapply"
+skstreamlog "$streamname" $LogCubeSize
+echo "0" > "./status/stat_log_${streamname}.txt"
+menurecord_default="lAO188dmappON"
+;;
+
+
+
 
 
 

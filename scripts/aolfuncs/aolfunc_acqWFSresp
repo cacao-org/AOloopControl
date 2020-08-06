@@ -7,7 +7,7 @@
 
 
 
-
+RMtmpSAVE="ON"
 
 
 
@@ -51,7 +51,7 @@ dir_conf_staged="conf_staged"
 
 
 
-
+RMLOacquired="no"
 
 
 
@@ -177,6 +177,9 @@ then # use option -r to re-use AO shared memory configuration
 else
     ./auxscripts/aolMeasureLOrespmat2 -n ${ACmrmNBcycle} -d ${delayRM1us} ${RMMamplum} ${RMdelayfr} ${RMfrave} ${RMexfr} ${WFSnorm}
 fi
+
+RMLOacquired="yes"
+
 }
 
 
@@ -480,6 +483,36 @@ fi
 
 
 
+
+# Archive temporary RM files for further processing
+#
+
+if [ "${RMtmpSAVE}" = "ON" ]; then
+  
+  mv tmpRMacquZ tmpRMacquZ-${aCALIBdatestr}
+  RMparamFile="tmpRMacquZ-${aCALIBdatestr}/RM_acqu_params.txt"
+  printf "%20s %s\n" "ACzrmNBcycle" "${ACzrmNBcycle}" >> ${RMparamFile}
+  printf "%20s %s\n" "delayRM1us" "${delayRM1us}" >> ${RMparamFile}
+  printf "%20s %s\n" "RMamplum" "${RMamplum}" >> ${RMparamFile}
+  printf "%20s %s\n" "RMdelayfr" "${RMdelayfr}" >> ${RMparamFile}
+  printf "%20s %s\n" "RMfrave" "${RMfrave}" >> ${RMparamFile}
+  printf "%20s %s\n" "RMexfr" "${RMexfr}" >> ${RMparamFile}
+  printf "%20s %s\n" "WFSnorm" "${WFSnorm}" >> ${RMparamFile}
+
+  
+  if [ "${RMLOacquired}" = "yes" ]; then
+    mv tmpRMacquLO tmpRMacquLO-${aCALIBdatestr}
+    RMparamFile="tmpRMacquLO-${aCALIBdatestr}/RM_acqu_params.txt"
+    printf "%20s %s\n" "ACmrmNBcycle" "${ACmrmNBcycle}" >> ${RMparamFile}
+    printf "%20s %s\n" "delayRM1us" "${delayRM1us}" >> ${RMparamFile}
+    printf "%20s %s\n" "RMMamplum" "${RMMamplum}" >> ${RMparamFile}
+    printf "%20s %s\n" "RMdelayfr" "${RMdelayfr}" >> ${RMparamFile}
+    printf "%20s %s\n" "RMfrave" "${RMfrave}" >> ${RMparamFile}
+    printf "%20s %s\n" "RMexfr" "${RMexfr}" >> ${RMparamFile}
+    printf "%20s %s\n" "WFSnorm" "${WFSnorm}" >> ${RMparamFile}    
+  fi
+
+fi
 
 
 # =============================================================================================================

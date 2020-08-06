@@ -317,6 +317,9 @@ menuitems+=( " " " " )
 #menuitems+=( "ljcs" "\Zr labjack \Zn: (re-)start scexao2->scexao TCP transfer" )
 #menuitems+=( "ljck" "\Zr labjack \Zn: kill scexao2->scexao TCP transfer" )
 
+menuitems+=( " " " " )
+menuitems+=( "tels" "\Zr telescope_status \Zn: (re-)start scexao2->scexao TCP transfer [port 30106]" )
+menuitems+=( "telk" "\Zr telescope_status \Zn: kill scexao2->scexao TCP transfer [port 30106]" )
 
 
 
@@ -639,6 +642,20 @@ aoconflogext "kill vcamim1 scexao4 -> scexao TCP transfer"
 #aoconflogext "kill labjack scexao2 -> scexao TCP transfer"
 #/home/scexao/bin/getTCPscexao2im -k labjack 30109
 #;;
+
+
+
+
+
+	tels)
+aoconflogext "(re-)start telescope_status scexao2 -> scexao TCP transfer"
+/home/scexao/bin/getTCPscexao2im telescope_status 30106
+;;
+	telk)
+aoconflogext "kill telescope_status scexao2 -> scexao TCP transfer"
+/home/scexao/bin/getTCPscexao2im -k telescope_status 30106
+;;
+
 
 
 

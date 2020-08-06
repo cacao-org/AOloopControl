@@ -103,6 +103,10 @@ fi
 # startup file
 SF="aolmonstartup"
 
+thisPID=$(echo $$)
+sudo cset proc -m $thisPID aollog
+sudo chrt -f -p 70 $thisPID
+
 echo "aolrtlogsavel \"$1\"" > $SF
 echo "exitCLI" >> $SF
 ./AOloopControl -n $pname -f ${pname}fifo -s $SF

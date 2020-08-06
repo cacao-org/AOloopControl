@@ -11,7 +11,7 @@ fi
 # is the loop control in combined/ZONAL CM or MODAL CM mode ?
 ConfReadParam CMMODE "0"; CMMODE="${paramvalue}"
 
-
+CPUconfRT=1
 
 
 # argument is tmux session name within which command should be executed
@@ -480,7 +480,7 @@ echo "tmux new-session -d -s $tmuxname" >> $scriptfile
 echo "sleep 0.2" >> $scriptfile
 logRunningProcessQ0 "aolzpwfscloop" "$tmuxname" "AO loop zero point offset (zonal, CPU-based)"
 echo "tmux send-keys -t ${tmuxname} \"mv runproc/aolzpwfscloop.runprocQ runproc/aolzpwfscloop.runproc\" C-m" >> $scriptfile
-echo "tmux send-keys -t $tmuxname \"$execname -n aol${LOOPNUMBER}wfszpo\" C-m" >> $scriptfile
+echo "tmux send-keys -t $tmuxname \"OMP_NUM_THREADS=1 $execname -n aol${LOOPNUMBER}wfszpo\" C-m" >> $scriptfile
 if [ "$CPUconfRT" -eq "1" ];then
 echo "tmux send-keys -t $tmuxname \"csetpmove aol0RT\" C-m" >> $scriptfile # try index 0 first (default)
 echo "tmux send-keys -t $tmuxname \"csetpmove aol${LOOPNUMBER}RT\" C-m" >> $scriptfile
@@ -513,9 +513,9 @@ echo "sleep 0.2" >> $scriptfile
 logRunningProcessQ0 "modesextractwfs" "$tmuxname" "AO loop extract WFS modes"
 echo "tmux send-keys -t ${tmuxname} \"mv runproc/modesextractwfs.runprocQ runproc/modesextractwfs.runproc\" C-m" >> $scriptfile
 if [ "$CMMODE" -eq "1" ]; then
-echo "tmux send-keys -t $tmuxname \"./auxscripts/modesextractwfs ${GPUmodesextrwfs}\" C-m" >> $scriptfile
+echo "tmux send-keys -t $tmuxname \"OMP_NUM_THREADS=1 ./auxscripts/modesextractwfs ${GPUmodesextrwfs}\" C-m" >> $scriptfile
 else
-echo "tmux send-keys -t $tmuxname \"./auxscripts/modesextractwfs -r ${GPUmodesextrwfs}\" C-m" >> $scriptfile
+echo "tmux send-keys -t $tmuxname \"OMP_NUM_THREADS=1 ./auxscripts/modesextractwfs -r ${GPUmodesextrwfs}\" C-m" >> $scriptfile
 fi
 fi
 
@@ -532,7 +532,7 @@ echo "tmux new-session -d -s $tmuxname" >> $scriptfile
 echo "sleep 0.2" >> $scriptfile
 logRunningProcessQ0 "aolcompolm" "$tmuxname" "AO loop extract open loop WFS modes"
 echo "tmux send-keys -t ${tmuxname} \"mv runproc/aolcompolm.runprocQ runproc/aolcompolm.runproc\" C-m" >> $scriptfile
-echo "tmux send-keys -t $tmuxname \"./AOloopControl -p ${tmuxname}\" C-m" >> $scriptfile
+echo "tmux send-keys -t $tmuxname \"OMP_NUM_THREADS=1 ./AOloopControl -p ${tmuxname}\" C-m" >> $scriptfile
 if [ "$CPUconfRT" -eq "1" ];then
 echo "tmux send-keys -t $tmuxname \"csetpmove aol0RT\" C-m" >> $scriptfile # try 0 first
 echo "tmux send-keys -t $tmuxname \"csetpmove aol${LOOPNUMBER}RT\" C-m" >> $scriptfile
@@ -552,7 +552,7 @@ echo "tmux new-session -d -s $tmuxname" >> $scriptfile
 echo "sleep 0.2" >> $scriptfile
 logRunningProcessQ0 "aolmcoeffs2dmmap" "$tmuxname" "DM modal (post-filtering) write back"
 echo "tmux send-keys -t ${tmuxname} \"mv runproc/aolmcoeffs2dmmap.runprocQ runproc/aolmcoeffs2dmmap.runproc\" C-m" >> $scriptfile
-echo "tmux send-keys -t $tmuxname \"./auxscripts/aolmcoeffs2dmmap -p ${tmuxname} -f ${GPUdmfw}\" C-m" >> $scriptfile
+echo "tmux send-keys -t $tmuxname \"OMP_NUM_THREADS=1 ./auxscripts/aolmcoeffs2dmmap -p ${tmuxname} -f ${GPUdmfw}\" C-m" >> $scriptfile
 fi
 
 
@@ -567,7 +567,7 @@ echo "tmux new-session -d -s $tmuxname" >> $scriptfile
 echo "sleep 0.2" >> $scriptfile
 logRunningProcessQ0 "aol_dmCave" "$tmuxname" "AO loop compute time-averaged DM correction"
 echo "tmux send-keys -t ${tmuxname} \"mv runproc/aol_dmCave.runprocQ runproc/aol_dmCave.runproc\" C-m" >> $scriptfile
-echo "tmux send-keys -t $tmuxname \"./auxscripts/aol_dmCave 0.0005\" C-m" >> $scriptfile
+echo "tmux send-keys -t $tmuxname \"OMP_NUM_THREADS=1 ./auxscripts/aol_dmCave 0.0005\" C-m" >> $scriptfile
 fi
 
 echo "sleep 2" >> $scriptfile
@@ -595,7 +595,7 @@ echo "tmux new-session -d -s $tmuxname" >> $scriptfile
 echo "sleep 0.2" >> $scriptfile
 logRunningProcessQ0 "aolmkWFSres" "$tmuxname" "compute and average WFS residual"
 echo "tmux send-keys -t ${tmuxname} \"mv runproc/aolmkWFSres.runprocQ runproc/aolmkWFSres.runproc\" C-m" >> $scriptfile
-echo "tmux send-keys -t $tmuxname \"./auxscripts/aolmkWFSres ${WFSresAveCoeff}\" C-m" >> $scriptfile
+echo "tmux send-keys -t $tmuxname \"OMP_NUM_THREADS=1 ./auxscripts/aolmkWFSres ${WFSresAveCoeff}\" C-m" >> $scriptfile
 fi
 
 
@@ -805,7 +805,7 @@ unset TMUX
 sleep 0.2
 tmux new-session -d -s $tmuxnameZP
 sleep 0.2
-tmux send-keys -t $tmuxnameZP "$execname -n aol${LOOPNUMBER}zploop$1" C-m
+tmux send-keys -t $tmuxnameZP "OMP_NUM_THREADS=1 $execname -n aol${LOOPNUMBER}zploop$1" C-m
 if [ "$CPUconfRT" -eq "1" ];then
 tmux send-keys -t $tmuxnameZP "csetpmove aol0RT" C-m # try 0 first
 tmux send-keys -t $tmuxnameZP "csetpmove aol${LOOPNUMBER}RT" C-m
